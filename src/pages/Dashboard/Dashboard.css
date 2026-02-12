@@ -1,0 +1,80 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section Header Teks */
+.section-header {
+  margin: 40px 0 20px;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  overflow-x: auto; /* Memungkinkan scroll horizontal */
+  white-space: nowrap;
+  gap: 15px;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Sembunyikan scrollbar di Firefox */
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none; /* Sembunyikan scrollbar di Chrome/Safari */
+}
+
+.tab {
+  padding: 10px 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.tab.active {
+  color: var(--tertiary);
+  border-bottom: 3px solid var(--tertiary);
+}
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  gap: 20px;
+  /* Default Mobile: 1 Kolom */
+  grid-template-columns: 1fr;
+}
+
+/* Banner Newsletter */
+.newsletter-banner {
+  background: url("/path-to-your-bg.jpg") no-repeat center/cover;
+  border-radius: 12px;
+  padding: 60px;
+  text-align: center;
+  color: white;
+  margin-top: 60px;
+}
+
+.empty-state {
+  grid-column: 1 / -1; /* Mengambil seluruh baris grid */
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 3 Kolom */
+@media (min-width: 1024px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

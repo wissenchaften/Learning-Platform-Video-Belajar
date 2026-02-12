@@ -1,0 +1,134 @@
+.filter-sidebar {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 24px;
+  height: fit-content;
+  position: sticky;
+  top: 100px; /* Menjaga sidebar tetap terlihat saat scroll jika navbar fixed */
+}
+
+.filter-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.filter-group-header span {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
+.btn-reset {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  transition: opacity var(--transition-speed);
+}
+
+.btn-reset:hover {
+  opacity: 0.7;
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--primary-green);
+}
+
+.filter-item {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  transition: color var(--transition-speed);
+}
+
+.filter-item:hover {
+  color: var(--primary-green);
+}
+
+/* Custom Checkbox & Radio Style */
+.filter-item input[type="checkbox"],
+.filter-item input[type="radio"] {
+  appearance: none; /* Mematikan tampilan default browser */
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+
+  /* Sekarang border bisa diubah! */
+  border: 2px solid var(--border-green);
+  background-color: var(--background-green);
+  display: inline-grid;
+  place-content: center;
+  transition: border-color 0.2s ease;
+}
+
+/* Style khusus untuk Radio (Bulat) */
+.filter-item input[type="radio"] {
+  border-radius: 50%;
+}
+
+/* Style khusus untuk Checkbox (Kotak sedikit melengkung) */
+.filter-item input[type="checkbox"] {
+  border-radius: 4px;
+}
+
+/* Mengubah border dan isi saat di-check */
+.filter-item input:checked {
+  border-color: var(--border-green);
+  background-color: var(
+    --background-green
+  ); /* Memberi warna background saat aktif */
+}
+
+/* Membuat tanda centang/titik di dalam saat aktif */
+.filter-item input:checked::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(
+    14% 44%,
+    0 65%,
+    50% 100%,
+    100% 16%,
+    80% 0%,
+    43% 62%
+  ); /* Tanda centang */
+  background-color: var(--text-muted);
+}
+
+.filter-item input[type="radio"]:checked::before {
+  clip-path: circle(50%); /* Menjadi titik bulat untuk radio */
+}
+
+/* Garis pemisah antar seksi kecuali yang terakhir */
+.filter-section:not(:last-child) {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+}
+@media (max-width: 768px) {
+  .filter-sidebar {
+    position: unset;
+  }
+}
+@media (max-width: 320px) {
+}

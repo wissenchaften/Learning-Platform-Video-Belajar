@@ -1,0 +1,62 @@
+.category-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.category-header {
+  margin-bottom: 30px;
+}
+.category-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.category-content {
+  display: grid;
+  grid-template-columns: 280px 1fr; /* Sidebar fixed, content sisa */
+  gap: 30px;
+}
+
+/* Toolbar Styling */
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 8px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.empty-state {
+  grid-column: 1 / -1; /* Mengambil seluruh baris grid */
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.btn-reset-filter {
+  padding: 10px 24px;
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-reset-filter:hover {
+  filter: brightness(90%);
+}
+
+@media (max-width: 768px) {
+  .category-content {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,173 @@
+.video-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  display: flex; /* Tambahkan ini agar layout bisa berubah flex */
+  flex-direction: column; /* Default desktop: atas ke bawah */
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-thumbnail img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+  flex: 1; /* Agar konten mengambil sisa ruang */
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+/* src/components/VideoCard/VideoCard.css */
+.card-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 10px 0;
+
+  /* Batasi maksimal 2 baris teks */
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Jaga tinggi tetap konsisten agar card tidak naik turun */
+  height: 3em;
+}
+
+.card-instructor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.instructor-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.instructor-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.instructor-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+}
+
+.rating-score {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: 5px;
+}
+
+.price {
+  color: var(--primary-green);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .video-card {
+    flex-direction: row; /* Ubah ke horizontal sesuai gambar 1.1 */
+    padding: 12px;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .card-thumbnail {
+    flex: 0 0 100px; /* Lebar thumbnail tetap di mobile */
+  }
+
+  .card-thumbnail img {
+    height: 100px; /* Ukuran gambar jadi kotak kecil */
+    width: 100px;
+    border-radius: 8px;
+  }
+
+  .card-content {
+    padding: 0; /* Reset padding karena sudah ada gap di parent */
+  }
+
+  .card-title {
+    font-size: 0.95rem; /* Ukuran teks lebih kecil di mobile */
+    margin-bottom: 4px;
+  }
+
+  .card-desc {
+    display: none; /* Sembunyikan deskripsi di mobile sesuai gambar */
+  }
+
+  .card-instructor {
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+
+  .instructor-avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .instructor-role {
+    display: block; /* Pastikan role terlihat tapi ringkas */
+  }
+
+  .card-footer {
+    border-top: none; /* Hilangkan garis pembatas di mobile agar clean */
+    padding-top: 0;
+    flex-wrap: wrap;
+  }
+
+  .price {
+    font-size: 1rem;
+    color: var(--primary-green); /* Warna hijau cerah sesuai gambar referensi */
+  }
+}
+
+@media (max-width: 480px) {
+  .video-card {
+    gap: 12px;
+  }
+
+  .card-thumbnail {
+    flex: 0 0 80px;
+  }
+
+  .card-thumbnail img {
+    width: 82px;
+    height: 82px;
+  }
+
+  .price {
+    width: 100%; /* Harga pindah ke bawah jika layar terlalu sempit */
+    text-align: right;
+    margin-top: 5px;
+  }
+}

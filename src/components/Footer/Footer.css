@@ -1,0 +1,217 @@
+.main-footer {
+  background-color: var(--white);
+  padding: 80px 5% 30px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.footer-info {
+  flex: 1.5; /* Memberi ruang lebih untuk info perusahaan */
+  max-width: 400px;
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+  margin-bottom: 24px;
+  object-fit: contain;
+}
+
+.footer-info h4 {
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.footer-info p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  flex: 3;
+  justify-content: flex-end;
+  flex-wrap: wrap; /* Menghindari overflow jika link terlalu banyak */
+}
+
+.link-group {
+  min-width: 150px; /* Menjaga lebar kolom agar konsisten */
+}
+
+.link-group h5 {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.link-group p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.link-group p:hover {
+  color: var(--primary-orange);
+  transform: translateX(5px); /* Efek geser sedikit saat hover */
+}
+
+.link-items {
+  display: block; /* Selalu tampil di desktop */
+}
+
+/* --- Footer Bottom --- */
+.footer-bottom {
+  max-width: 1200px;
+  margin: 60px auto 0;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.social-icons img {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  transition:
+    transform var(--transition-speed) ease,
+    opacity var(--transition-speed);
+  opacity: 0.8;
+}
+
+.social-icons img:hover {
+  transform: translateY(-5px);
+  opacity: 1;
+}
+
+/* --- Responsive Media Queries --- */
+
+@media (max-width: 1024px) {
+  .footer-container {
+    gap: 30px;
+  }
+  .footer-links {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-footer {
+    padding: 60px 24px 30px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-info {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .link-group {
+    width: 100%;
+  }
+
+  .link-group h5 {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
+  .link-group h5::after {
+    content: "›";
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+
+  /* Animasi Arrow */
+  .link-group h5::after {
+    content: "›";
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+
+  /* Putar arrow jika menu aktif */
+  .link-group.active h5::after {
+    transform: rotate(90deg);
+  }
+
+  /* Sembunyikan isi link dengan animasi halus */
+  .link-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+  }
+
+  /* Tampilkan isi link saat active */
+  .link-group.active .link-items {
+    max-height: 1000px; /* Nilai besar agar konten muat */
+    transition: max-height 0.4s ease-in;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .link-group p {
+    margin-bottom: 15px;
+    padding-left: 10px; /* Indentasi agar terlihat seperti sub-menu */
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 25px;
+    margin-top: 40px;
+  }
+
+  .social-icons {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logo {
+    height: 32px;
+  }
+
+  .footer-info h4 {
+    font-size: 1rem;
+  }
+}

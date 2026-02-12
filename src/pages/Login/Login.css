@@ -1,0 +1,179 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  padding: 20px 50px;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo img {
+  height: 32px; /* Sesuaikan tinggi logo agar pas dengan navbar */
+  width: auto; /* Menjaga aspek rasio agar tidak gepeng */
+  display: block;
+}
+
+/* Opsional: Jika Anda ingin navbar lebih rapi */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 15px 50px;
+  height: 64px; /* Tinggi standar navbar */
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.login-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.login-card {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.login-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.login-card p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.login-form {
+  text-align: left;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.input-group label span {
+  color: red;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  outline: none;
+}
+
+.forgot-pw {
+  display: block;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.divider {
+  margin: 20px 0;
+  text-align: center;
+  position: relative;
+  color: var(--text-muted);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.divider::before {
+  left: 0;
+}
+.divider::after {
+  right: 0;
+}
+
+.btn-google-reusable {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+/* Container untuk input password agar icon mata bisa di posisi kanan */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px; /* Beri ruang agar teks tidak tertutup icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.toggle-password:hover {
+  color: var(--primary-green);
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 319px) {
+  .login-card {
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    text-align: center;
+  }
+}
