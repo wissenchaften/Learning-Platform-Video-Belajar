@@ -4,7 +4,6 @@ import "./VideoCard.css";
 const VideoCard = ({ data }) => {
   return (
     <div className="video-card">
-      {/* Gambar Thumbnail dari data lokal */}
       <div className="card-thumbnail">
         <img src={data.img} alt={data.title} />
       </div>
@@ -13,7 +12,6 @@ const VideoCard = ({ data }) => {
         <h4 className="card-title">{data.title}</h4>
         <p className="card-desc">{data.description}</p>
 
-        {/* Info Instruktur sesuai desain Beranda */}
         <div className="card-instructor">
           <img
             src={data.avatar}
@@ -28,7 +26,6 @@ const VideoCard = ({ data }) => {
           </div>
         </div>
 
-        {/* Rating dan Harga */}
         <div className="card-footer">
           <div className="footer-left">
             <div className="rating">

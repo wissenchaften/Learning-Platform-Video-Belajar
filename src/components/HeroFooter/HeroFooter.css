@@ -7,7 +7,7 @@
 }
 
 .hero2-overlay {
-  background: rgba(0, 0, 0, 0.7); /* Layer gelap agar teks terbaca */
+  background: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
   display: flex;

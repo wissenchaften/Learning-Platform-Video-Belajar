@@ -4,7 +4,6 @@ import "./Toolbar.css";
 const Toolbar = ({ onSort, onSearch }) => {
   return (
     <div className="toolbar-container">
-      {/* Bagian Urutkan */}
       <div className="sort-group">
         <div className="select-wrapper">
           <select id="sort-select" onChange={(e) => onSort(e.target.value)}>

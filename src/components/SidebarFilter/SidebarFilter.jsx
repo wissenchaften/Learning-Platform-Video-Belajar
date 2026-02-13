@@ -10,7 +10,6 @@ const SidebarFilter = ({
   setSelectedDuration,
   onReset,
 }) => {
-  // Helper untuk checkbox (Bidang Studi & Harga)
   const handleCheckboxChange = (value, state, setState) => {
     if (state.includes(value)) {
       setState(state.filter((item) => item !== value));
@@ -28,7 +27,6 @@ const SidebarFilter = ({
         </button>
       </div>
 
-      {/* 1. Bidang Studi */}
       <div className="filter-section">
         <h4>Bidang Studi</h4>
         {[
@@ -55,7 +53,6 @@ const SidebarFilter = ({
         ))}
       </div>
 
-      {/* 2. Harga */}
       <div className="filter-section">
         <h4>Harga</h4>
         {["Gratis", "Berbayar"].map((p) => (
@@ -72,7 +69,6 @@ const SidebarFilter = ({
         ))}
       </div>
 
-      {/* 3. Durasi */}
       <div className="filter-section">
         <h4>Durasi</h4>
         {["Kurang dari 4 Jam", "4-8 Jam", "Lebih dari 8 Jam"].map((dur) => (

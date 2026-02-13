@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut, Menu, X } from "lucide-react"; // Tambahkan icon X untuk tutup
+import { LogOut, Menu, X } from "lucide-react";
 import "./Navbar.css";
 import logoImg from "../../assets/logo.png";
 import profileImg from "../../assets/profile-avatar.png";
@@ -28,7 +28,6 @@ const Navbar = () => {
         </div>
 
         <div className="nav-right">
-          {/* Link Desktop */}
           <Link
             style={{ textDecoration: "none" }}
             to="/category"
@@ -36,8 +35,6 @@ const Navbar = () => {
           >
             <span>Kategori</span>
           </Link>
-
-          {/* Hamburger Menu (Mobile Only) */}
           <div
             className="mobile-menu-trigger mobile-only"
             onClick={toggleDropdown}
@@ -45,9 +42,7 @@ const Navbar = () => {
             {isDropdownOpen ? <X size={24} /> : <Menu size={24} />}
           </div>
 
-          {/* Profile Section */}
           <div className={`profile-section ${isDropdownOpen ? "active" : ""}`}>
-            {/* Avatar hanya muncul di desktop, di mobile avatar masuk ke dalam dropdown */}
             <img
               src={profileImg}
               alt="User Profile"
@@ -58,7 +53,6 @@ const Navbar = () => {
             {isDropdownOpen && (
               <div className="profile-dropdown">
                 <ul className="dropdown-menu">
-                  {/* TAMPILAN KHUSUS MOBILE DI DALAM DROPDOWN */}
                   <li className="mobile-user-info mobile-only">
                     <img
                       src={profileImg}
@@ -78,9 +72,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <hr className="dropdown-divider mobile-only" />
-                  {/* END KHUSUS MOBILE */}
 
-                  {/* ITEM UMUM */}
                   <li className="desktop-only">
                     <Link
                       to="/profile"
