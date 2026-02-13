@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react"; // Import ikon lucide
+import { Eye, EyeOff } from "lucide-react";
 import Button from "../../components/Button/Button";
 import "./Register.css";
 import logoImg from "../../assets/logo.png";
@@ -8,7 +8,7 @@ import logoImg from "../../assets/logo.png";
 const Register = () => {
   const navigate = useNavigate();
 
-  // State untuk semua input
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -17,12 +17,11 @@ const Register = () => {
     confirmPassword: "",
   });
 
-  // State untuk UI (Toggle password & Loading)
+
   const [showPw, setShowPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handler untuk mengupdate state secara dinamis
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -31,7 +30,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
 
-    // Validasi sederhana: Cek apakah password cocok
+
     if (formData.password !== formData.confirmPassword) {
       alert("Kata sandi dan konfirmasi kata sandi tidak cocok!");
       return;
@@ -39,7 +38,6 @@ const Register = () => {
 
     setIsLoading(true);
 
-    // Simulasi API Call
     setTimeout(() => {
       console.log("Data Pendaftaran:", formData);
       setIsLoading(false);
@@ -66,7 +64,6 @@ const Register = () => {
           <p>Yuk, daftarkan akunmu sekarang juga!</p>
 
           <form className="login-form" onSubmit={handleRegister}>
-            {/* Nama Lengkap */}
             <div className="input-group">
               <label>
                 Nama Lengkap <span>*</span>
@@ -80,7 +77,6 @@ const Register = () => {
               />
             </div>
 
-            {/* Email */}
             <div className="input-group">
               <label>
                 E-Mail <span>*</span>
@@ -94,7 +90,6 @@ const Register = () => {
               />
             </div>
 
-            {/* No Hp */}
             <div className="input-group">
               <label>
                 No. Hp <span>*</span>

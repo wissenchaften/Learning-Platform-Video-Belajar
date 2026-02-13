@@ -1,4 +1,4 @@
-/* Import style login agar konsisten */
+
 @import "../Login/Login.css";
 
 .phone-input-container {
@@ -57,11 +57,10 @@
 }
 
 .input-phone {
-  border: none !important; /* Menghilangkan border internal input */
+  border: none !important;
   flex: 1;
 }
 
-/* Re-use password wrapper dari Login.css */
 
 .toggle-password {
   position: absolute;

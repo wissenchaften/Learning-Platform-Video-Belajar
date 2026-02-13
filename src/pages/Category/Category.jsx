@@ -59,9 +59,9 @@ const CategoryPage = () => {
         case "Harga Tinggi":
           return b.price - a.price;
         case "A to Z":
-          return a.title.localeCompare(b.title); // Mengurutkan teks dari A-Z
+          return a.title.localeCompare(b.title);
         case "Z to A":
-          return b.title.localeCompare(a.title); // Mengurutkan teks dari Z-A
+          return b.title.localeCompare(a.title);
         case "Rating Tertinggi":
           return b.rating - a.rating;
         case "Rating Terendah":
@@ -75,7 +75,7 @@ const CategoryPage = () => {
     <div className="category-page">
       <Navbar />
       <main className="category-container">
-        {/* Header... */}
+
         <div className="category-content">
           <SidebarFilter
             selectedCategories={selectedCategories}
@@ -91,14 +91,14 @@ const CategoryPage = () => {
             <Toolbar onSort={setSortBy} onSearch={setSearchTerm} />
 
             {filteredData.length > 0 ? (
-              /* Tampilkan Grid jika data ada */
+
               <div className="video-grid">
                 {filteredData.map((item) => (
                   <VideoCard key={item.id} data={item} />
                 ))}
               </div>
             ) : (
-              /* Tampilkan Pesan jika data kosong */
+
               <div className="empty-state">
                 <p>Maaf, belum ada video untuk kategori ini.</p>
                 <button className="btn-reset-filter" onClick={handleReset}>

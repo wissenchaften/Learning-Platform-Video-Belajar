@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import Button from "../../components/Button/Button";
 import logoImg from "../../assets/logo.png";
-// Import icon mata (bisa gunakan library seperti lucide-react atau react-icons)
 import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
@@ -24,18 +23,15 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulasi delay loading API
     setTimeout(() => {
-      // Validasi input terhadap data statis
       if (email === MOCK_USER.email && password === MOCK_USER.password) {
         console.log("Login Berhasil!");
 
-        // Simpan status login di localStorage (opsional agar tidak logout saat refresh)
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", "Admin Videobelajar");
 
         setIsLoading(false);
-        navigate("/"); // Pindah ke halaman utama
+        navigate("/");
       } else {
         setIsLoading(false);
         alert(

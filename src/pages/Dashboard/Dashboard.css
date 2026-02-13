@@ -4,7 +4,6 @@
   margin: 0 auto;
 }
 
-/* Section Header Teks */
 .section-header {
   margin: 40px 0 20px;
 }
@@ -14,18 +13,17 @@
   margin-bottom: 8px;
 }
 
-/* Category Tabs */
 .category-tabs {
   display: flex;
-  overflow-x: auto; /* Memungkinkan scroll horizontal */
+  overflow-x: auto;
   white-space: nowrap;
   gap: 15px;
   padding-bottom: 10px;
-  scrollbar-width: none; /* Sembunyikan scrollbar di Firefox */
+  scrollbar-width: none;
 }
 
 .category-tabs::-webkit-scrollbar {
-  display: none; /* Sembunyikan scrollbar di Chrome/Safari */
+  display: none;
 }
 
 .tab {
@@ -40,15 +38,12 @@
   border-bottom: 3px solid var(--tertiary);
 }
 
-/* Video Grid */
 .video-grid {
   display: grid;
   gap: 20px;
-  /* Default Mobile: 1 Kolom */
   grid-template-columns: 1fr;
 }
 
-/* Banner Newsletter */
 .newsletter-banner {
   background: url("/path-to-your-bg.jpg") no-repeat center/cover;
   border-radius: 12px;
@@ -59,7 +54,7 @@
 }
 
 .empty-state {
-  grid-column: 1 / -1; /* Mengambil seluruh baris grid */
+  grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
   color: var(--text-muted);
@@ -72,7 +67,6 @@
   }
 }
 
-/* Desktop: 3 Kolom */
 @media (min-width: 1024px) {
   .video-grid {
     grid-template-columns: repeat(3, 1fr);

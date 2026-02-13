@@ -14,7 +14,7 @@
 
 .category-content {
   display: grid;
-  grid-template-columns: 280px 1fr; /* Sidebar fixed, content sisa */
+  grid-template-columns: 280px 1fr;
   gap: 30px;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .empty-state {
-  grid-column: 1 / -1; /* Mengambil seluruh baris grid */
+  grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
   color: var(--text-muted);

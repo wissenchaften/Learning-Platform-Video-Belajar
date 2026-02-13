@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"; // 1. Tambahkan useEffect di sini
-import { useNavigate } from "react-router-dom"; // 2. Tambahkan useNavigate di sini
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import VideoCard from "../../components/VideoCard/VideoCard";
@@ -8,16 +8,14 @@ import Footer from "../../components/Footer/Footer";
 import "./Dashboard.css";
 import { videoData } from "../../data/courses";
 
-// Data unik bisa diletakkan di luar agar tidak dihitung ulang setiap render
 const uniqueVideoData = Array.from(
   new Map(videoData.map((item) => [item.id, item])).values(),
 );
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // 3. Inisialisasi navigate di dalam komponen
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Semua Kelas");
 
-  // 4. Pindahkan useEffect ke DALAM komponen
   useEffect(() => {
     const loggedIn = localStorage.getItem("isLoggedIn");
     if (!loggedIn) {
