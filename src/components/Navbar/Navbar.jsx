@@ -100,6 +100,12 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <hr className="dropdown-divider" />
+                  <li>
+                    <Link to="/manage">
+                      <span>Kelola Kursus</span>
+                    </Link>
+                  </li>
+                  <hr className="dropdown-divider" />
                   <li className="logout-option" onClick={handleLogout}>
                     <span>Keluar</span>
                     <LogOut size={16} />

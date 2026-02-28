@@ -8,11 +8,12 @@ import Footer from "../../components/Footer/Footer";
 import "./Dashboard.css";
 import { videoData } from "../../data/courses";
 
-const uniqueVideoData = Array.from(
-  new Map(videoData.map((item) => [item.id, item])).values(),
-);
-
 const Dashboard = () => {
+  const [courses, setCourses] = useState(() => {
+    const savedData = localStorage.getItem("myCoursesData");
+    return savedData ? JSON.parse(savedData) : videoData;
+  });
+
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Semua Kelas");
 
@@ -34,8 +35,8 @@ const Dashboard = () => {
 
   const filteredVideos =
     activeCategory === "Semua Kelas"
-      ? uniqueVideoData
-      : uniqueVideoData.filter((video) => video.category === activeCategory);
+      ? courses
+      : courses.filter((video) => video.category === activeCategory);
 
   return (
     <div className="dashboard-page">

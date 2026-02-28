@@ -23,6 +23,12 @@
   border: none;
 }
 
+.btn-danger {
+  background-color: var(--tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--white);
+}
+
 .btn-outline {
   background-color: transparent;
   border: 1px solid var(--border-color);
@@ -49,11 +55,15 @@
 }
 
 .btn-primary:hover {
-  filter: brightness(90%); /* Memberi efek gelap sedikit saat hover */
+  filter: brightness(90%);
 }
 
 .btn-secondary:hover {
-  filter: brightness(90%); /* Memberi efek gelap sedikit saat hover */
+  filter: brightness(90%);
+}
+
+.btn-danger:hover {
+  filter: brightness(90%);
 }
 
 .btn-outline:hover {

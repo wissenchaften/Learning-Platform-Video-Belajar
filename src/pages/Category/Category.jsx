@@ -10,10 +10,16 @@ import { videoData } from "../../data/courses";
 import "./Category.css";
 
 const CategoryPage = () => {
+  // 1. Integrasi Local Storage: Ambil data dari storage atau gunakan data default
+  const [courses, setCourses] = useState(() => {
+    const savedData = localStorage.getItem("myCoursesData");
+    return savedData ? JSON.parse(savedData) : videoData;
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Harga Rendah");
 
-  // State Filter
+  // State Filter (tetap sama)
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedDuration, setSelectedDuration] = useState("");
@@ -26,8 +32,8 @@ const CategoryPage = () => {
     setSortBy("Harga Rendah");
   };
 
-  // Logic Filter & Sort
-  const filteredData = videoData
+  // 2. Gunakan 'courses' (dari state) bukan 'videoData' (statis) untuk filter & sort
+  const filteredData = courses // Perubahan di sini
     .filter((item) => {
       const matchesSearch = item.title
         .toLowerCase()
@@ -75,7 +81,6 @@ const CategoryPage = () => {
     <div className="category-page">
       <Navbar />
       <main className="category-container">
-
         <div className="category-content">
           <SidebarFilter
             selectedCategories={selectedCategories}
@@ -91,14 +96,12 @@ const CategoryPage = () => {
             <Toolbar onSort={setSortBy} onSearch={setSearchTerm} />
 
             {filteredData.length > 0 ? (
-
               <div className="video-grid">
                 {filteredData.map((item) => (
                   <VideoCard key={item.id} data={item} />
                 ))}
               </div>
             ) : (
-
               <div className="empty-state">
                 <p>Maaf, belum ada video untuk kategori ini.</p>
                 <button className="btn-reset-filter" onClick={handleReset}>
