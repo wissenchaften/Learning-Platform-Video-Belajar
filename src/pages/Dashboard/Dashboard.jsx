@@ -5,24 +5,26 @@ import Hero from "../../components/Hero/Hero";
 import VideoCard from "../../components/VideoCard/VideoCard";
 import HeroFooter from "../../components/HeroFooter/HeroFooter";
 import Footer from "../../components/Footer/Footer";
+import useCourseStore from "../../store/useCourseStore";
 import "./Dashboard.css";
-import { videoData } from "../../data/courses";
 
 const Dashboard = () => {
-  const [courses, setCourses] = useState(() => {
-    const savedData = localStorage.getItem("myCoursesData");
-    return savedData ? JSON.parse(savedData) : videoData;
-  });
-
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Semua Kelas");
 
+  // Ambil data, fungsi fetch, dan loading state dari Zustand
+  const { courses, fetchCourses, loading } = useCourseStore();
+
   useEffect(() => {
+    // Proteksi Route: Cek login
     const loggedIn = localStorage.getItem("isLoggedIn");
     if (!loggedIn) {
       navigate("/login");
     }
-  }, [navigate]);
+
+    // Panggil API melalui Zustand saat komponen dimuat
+    fetchCourses();
+  }, [navigate, fetchCourses]);
 
   const categories = [
     "Semua Kelas",
@@ -33,6 +35,7 @@ const Dashboard = () => {
     "Bisnis Manajemen",
   ];
 
+  // Logika filter menggunakan data 'courses' dari store
   const filteredVideos =
     activeCategory === "Semua Kelas"
       ? courses
@@ -60,17 +63,25 @@ const Dashboard = () => {
           ))}
         </div>
 
-        <div className="video-grid">
-          {filteredVideos.length > 0 ? (
-            filteredVideos.map((item) => (
-              <VideoCard key={item.id} data={item} />
-            ))
-          ) : (
-            <div className="empty-state">
-              <p>Maaf, belum ada video untuk kategori ini.</p>
-            </div>
-          )}
-        </div>
+        {/* Handling Loading State */}
+        {loading ? (
+          <div className="loading-state">
+            <p>Memuat video pembelajaran terbaru...</p>
+          </div>
+        ) : (
+          <div className="video-grid">
+            {filteredVideos.length > 0 ? (
+              filteredVideos.map((item) => (
+                <VideoCard key={item.id} data={item} />
+              ))
+            ) : (
+              <div className="empty-state">
+                <p>Maaf, belum ada video untuk kategori ini.</p>
+              </div>
+            )}
+          </div>
+        )}
+
         <HeroFooter />
       </main>
       <Footer />

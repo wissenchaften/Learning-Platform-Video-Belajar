@@ -2,29 +2,25 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
-import { videoData } from "../../data/courses";
+import useCourseStore from "../../store/useCourseStore"; // Import Store Zustand
 import "./ManageCourses.css";
 
-import thumb9 from "../../assets/img-cards/card9.jpg";
-import ava9 from "../../assets/img-avatars/ava9.png";
-
 const ManageCourses = () => {
-  // state course yang sudah ada
-  const [courses, setCourses] = useState(() => {
-    const savedData = localStorage.getItem("myCoursesData");
-    return savedData ? JSON.parse(savedData) : videoData;
-  });
+  // Ambil state dan fungsi dari Zustand Store
+  const {
+    courses,
+    fetchCourses,
+    addCourse,
+    updateCourse,
+    deleteCourse,
+    loading,
+  } = useCourseStore();
 
-  // Local storage
-  useEffect(() => {
-    localStorage.setItem("myCoursesData", JSON.stringify(courses));
-  }, [courses]);
-
-  // state edit
+  // State untuk menangani mode edit
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
 
-  // state untuk ambil input dari form
+  // State untuk form input
   const [newCourse, setNewCourse] = useState({
     title: "",
     category: "Pemasaran",
@@ -35,17 +31,21 @@ const ManageCourses = () => {
     description: "",
   });
 
-  // state pagination
+  // State Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // logika untuk menghitung data yang ditampilkan
+  // Fetch data dari API saat komponen pertama kali dimuat
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
+
+  // Logika Pagination menggunakan data dari Store
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = courses.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(courses.length / itemsPerPage);
 
-  // fungsi navigasi halaman
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleInputChange = (e) => {
@@ -68,37 +68,7 @@ const ManageCourses = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (isEditing) {
-      // update
-      const updatedCourses = courses.map((c) =>
-        c.id === editId
-          ? { ...c, ...newCourse, price: parseInt(newCourse.price) }
-          : c,
-      );
-      setCourses(updatedCourses);
-      setIsEditing(false);
-      setEditId(null);
-      alert("Perubahan berhasil disimpan!");
-    } else {
-      //create
-      const courseToAdd = {
-        ...newCourse,
-        id: Date.now(),
-        rating: 3.5,
-        reviews: 20,
-        duration: 2.5,
-        img: thumb9,
-        avatar: ava9,
-        price: parseInt(newCourse.price) || 0,
-      };
-      setCourses([courseToAdd, ...courses]);
-      alert("Video berhasil ditambahkan!");
-    }
-
-    // Reset Form
+  const resetForm = () => {
     setNewCourse({
       title: "",
       category: "Pemasaran",
@@ -108,14 +78,47 @@ const ManageCourses = () => {
       price: "",
       description: "",
     });
+    setIsEditing(false);
+    setEditId(null);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus kursus ini?")) {
-      const updatedCourses = courses.filter((course) => course.id !== id);
-      setCourses(updatedCourses);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      alert("Item berhasil dihapus!");
+    // Persiapkan data agar sesuai dengan skema API
+    const coursePayload = {
+      ...newCourse,
+      price: parseInt(newCourse.price) || 0,
+    };
+
+    if (isEditing) {
+      // Logic Update tetap menggunakan data yang ada
+      const success = await updateCourse(editId, coursePayload);
+      if (success) {
+        alert("Perubahan berhasil disimpan ke API!");
+        resetForm();
+      }
+    } else {
+      // Logic Add: store akan otomatis menambahkan img, avatar, rating, dll secara acak
+      const success = await addCourse(coursePayload);
+      if (success) {
+        alert("Video berhasil ditambahkan ke API!");
+        resetForm();
+      }
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (
+      window.confirm("Apakah Anda yakin ingin menghapus kursus ini dari API?")
+    ) {
+      const success = await deleteCourse(id);
+      if (success) {
+        alert("Item berhasil dihapus!");
+        if (currentItems.length === 1 && currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      }
     }
   };
 
@@ -193,21 +196,7 @@ const ManageCourses = () => {
                 {isEditing ? "Simpan Perubahan" : "Tambah Kursus"}
               </Button>
               {isEditing && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setIsEditing(false);
-                    setNewCourse({
-                      title: "",
-                      category: "Pemasaran",
-                      instructor: "",
-                      role: "",
-                      company: "",
-                      price: "",
-                      description: "",
-                    });
-                  }}
-                >
+                <Button variant="outline" onClick={resetForm}>
                   Batal
                 </Button>
               )}
@@ -218,61 +207,76 @@ const ManageCourses = () => {
         <section className="list-section">
           <div className="list-header">
             <h3>Daftar Kursus ({courses.length})</h3>
-            <p>
-              Menampilkan {indexOfFirstItem + 1}-
-              {Math.min(indexOfLastItem, courses.length)} dari {courses.length}{" "}
-              data
-            </p>
+            {courses.length > 0 && !loading && (
+              <p>
+                Menampilkan {indexOfFirstItem + 1}-
+                {Math.min(indexOfLastItem, courses.length)} dari{" "}
+                {courses.length} data
+              </p>
+            )}
           </div>
 
           <div className="table-responsive">
-            <table className="manage-table">
-              <thead>
-                <tr>
-                  <th>Judul</th>
-                  <th>Kategori</th>
-                  <th>Pengajar</th>
-                  <th className="text-center">Harga</th>
-                  <th className="text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map((course) => (
-                  <tr key={course.id}>
-                    <td className="title-cell">
-                      <strong>{course.title}</strong>
-                    </td>
-                    <td>
-                      <span className="badge">{course.category}</span>
-                    </td>
-                    <td>{course.instructor}</td>
-                    <td>Rp {course.price}K</td>
-                    <td className="text-center">
-                      <div className="action-cell">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit(course)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => handleDelete(course.id)}
-                        >
-                          Hapus
-                        </Button>
-                      </div>
-                    </td>
+            {loading ? (
+              <div className="loading-state">
+                Sedang memuat data dari API...
+              </div>
+            ) : (
+              <table className="manage-table">
+                <thead>
+                  <tr>
+                    <th>Judul</th>
+                    <th>Kategori</th>
+                    <th>Pengajar</th>
+                    <th className="text-center">Harga</th>
+                    <th className="text-center">Aksi</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentItems.length > 0 ? (
+                    currentItems.map((course) => (
+                      <tr key={course.id}>
+                        <td className="title-cell">
+                          <strong>{course.title}</strong>
+                        </td>
+                        <td>
+                          <span className="badge">{course.category}</span>
+                        </td>
+                        <td>{course.instructor}</td>
+                        <td>Rp {course.price}K</td>
+                        <td className="text-center">
+                          <div className="action-cell">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEdit(course)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              onClick={() => handleDelete(course.id)}
+                            >
+                              Hapus
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center">
+                        Belum ada data di API.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
 
-          {/* --- UI PAGINATION --- */}
-          {totalPages > 1 && (
+          {totalPages > 1 && !loading && (
             <div className="pagination">
               <button
                 disabled={currentPage === 1}

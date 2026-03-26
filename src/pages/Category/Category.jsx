@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import VideoCard from "../../components/VideoCard/VideoCard";
 import Toolbar from "../../components/Toolbar/Toolbar";
 import SidebarFilter from "../../components/SidebarFilter/SidebarFilter";
-
-import { videoData } from "../../data/courses";
+import useCourseStore from "../../store/useCourseStore";
 
 import "./Category.css";
 
 const CategoryPage = () => {
-  // 1. Integrasi Local Storage: Ambil data dari storage atau gunakan data default
-  const [courses, setCourses] = useState(() => {
-    const savedData = localStorage.getItem("myCoursesData");
-    return savedData ? JSON.parse(savedData) : videoData;
-  });
+  // Ambil data, fungsi fetch, dan loading state dari Zustand Store
+  const { courses, fetchCourses, loading } = useCourseStore();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Harga Rendah");
 
-  // State Filter (tetap sama)
+  // State Filter
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedDuration, setSelectedDuration] = useState("");
+
+  // Panggil API melalui Zustand
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
   const handleReset = () => {
     setSelectedCategories([]);
@@ -32,8 +33,8 @@ const CategoryPage = () => {
     setSortBy("Harga Rendah");
   };
 
-  // 2. Gunakan 'courses' (dari state) bukan 'videoData' (statis) untuk filter & sort
-  const filteredData = courses // Perubahan di sini
+  // Logic Filter & Sort menggunakan data 'courses' dari store global
+  const filteredData = courses
     .filter((item) => {
       const matchesSearch = item.title
         .toLowerCase()
@@ -94,20 +95,27 @@ const CategoryPage = () => {
 
           <section className="course-list-section">
             <Toolbar onSort={setSortBy} onSearch={setSearchTerm} />
-
-            {filteredData.length > 0 ? (
-              <div className="video-grid">
-                {filteredData.map((item) => (
-                  <VideoCard key={item.id} data={item} />
-                ))}
+            {loading ? (
+              <div className="loading-state">
+                <p>Memuat katalog kelas...</p>
               </div>
             ) : (
-              <div className="empty-state">
-                <p>Maaf, belum ada video untuk kategori ini.</p>
-                <button className="btn-reset-filter" onClick={handleReset}>
-                  Hapus Semua Filter
-                </button>
-              </div>
+              <>
+                {filteredData.length > 0 ? (
+                  <div className="video-grid">
+                    {filteredData.map((item) => (
+                      <VideoCard key={item.id} data={item} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <p>Maaf, belum ada video untuk kategori ini.</p>
+                    <button className="btn-reset-filter" onClick={handleReset}>
+                      Hapus Semua Filter
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </section>
         </div>
